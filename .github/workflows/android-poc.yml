@@ -62,6 +62,8 @@ jobs:
 
       - name: Create and start emulator + run tests
         uses: reactivecircus/android-emulator-runner@v2
+        env:
+          JAVA_HOME: ${{ steps.setup-java.outputs.path }}
         with:
           api-level: 30
           arch: x86_64
