@@ -84,24 +84,37 @@ jobs:
           echo "${{ runner.temp }}/android-sdk/emulator" >> $GITHUB_PATH
           echo "${{ runner.temp }}/android-sdk/cmdline-tools/latest/cmdline-tools/bin" >> $GITHUB_PATH
 
-      - name: Create and start emulator + run tests
-        uses: reactivecircus/android-emulator-runner@v2
+      - name: Create Android Virtual Device
         env:
-          JAVA_HOME: ${{ steps.setup-java.outputs.path }}
-        with:
-          api-level: 30
-          arch: x86_64
-          target: google_apis
-          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect
-          script: |
-            adb wait-for-device
-            boot_status=""
-            until [ "$boot_status" = "1" ]; do
-              boot_status="$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')"
-              sleep 2
-            done
-            echo "Emulator reported boot_completed"
-            nohup appium --address 127.0.0.1 --port 4723 --log-level info > appium.log 2>&1 &
-            APPIUM_PID=$!
-            trap "kill $APPIUM_PID" EXIT
-            python -m pytest -q test.py
+          ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
+        run: |
+          echo "no" | $ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools/bin/avdmanager create avd \
+            -n github-ci -k "system-images;android-30;google_apis;x86_64" --device "pixel" --force
+
+      - name: Start emulator
+        env:
+          ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
+        run: |
+          nohup $ANDROID_SDK_ROOT/emulator/emulator -avd github-ci -no-window -no-boot-anim -gpu swiftshader_indirect -noaudio > emulator.log 2>&1 &
+          echo "EMULATOR_PID=$!" >> $GITHUB_ENV
+          adb wait-for-device
+          boot_status=""
+          until [ "$boot_status" = "1" ]; do
+            boot_status="$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')"
+            sleep 2
+          done
+          echo "Emulator reported boot_completed"
+
+      - name: Start Appium and run tests
+        run: |
+          nohup appium --address 127.0.0.1 --port 4723 --log-level info > appium.log 2>&1 &
+          APPIUM_PID=$!
+          trap "kill $APPIUM_PID" EXIT
+          python -m pytest -q test.py
+
+      - name: Stop emulator
+        if: always()
+        run: |
+          if [ -n "${EMULATOR_PID:-}" ]; then
+            kill $EMULATOR_PID || true
+          fi
