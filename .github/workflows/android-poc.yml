@@ -44,7 +44,7 @@ jobs:
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           else
-            pip install appium-python-client selenium pytest
+            pip install appium-python-client selenium pytest python-dotenv
           fi
 
       - name: Install required packages
