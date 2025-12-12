@@ -115,6 +115,9 @@ jobs:
       - name: Stop emulator
         if: always()
         run: |
+          if command -v adb >/dev/null 2>&1; then
+            adb -s emulator-5554 emu kill || true
+          fi
           if [ -n "${EMULATOR_PID:-}" ]; then
-            kill $EMULATOR_PID || true
+            kill "$EMULATOR_PID" || true
           fi
