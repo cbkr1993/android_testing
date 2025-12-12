@@ -1,0 +1,76 @@
+2025-12-12 20:39:42 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:39:42 | INFO     | Starting Codex v1.8.22
+2025-12-12 20:39:42 | INFO     | Ensuring database is correct and up to date...
+2025-12-12 20:39:54 | SUCCESS  | Database ready.
+2025-12-12 20:39:55 | SUCCESS  | Created admin user.
+2025-12-12 20:39:55 | INFO     | Created AdminFlag: Auto Update = False
+2025-12-12 20:39:55 | INFO     | Created AdminFlag: Banner Text = True
+2025-12-12 20:39:55 | INFO     | Created AdminFlag: Folder View = True
+2025-12-12 20:39:55 | INFO     | Created AdminFlag: Import Metadata = True
+2025-12-12 20:39:55 | INFO     | Created AdminFlag: Lazy Import Metadata = True
+2025-12-12 20:39:55 | INFO     | Created AdminFlag: Non Users = True
+2025-12-12 20:39:55 | INFO     | Created AdminFlag: Registration = True
+2025-12-12 20:39:55 | INFO     | Created AdminFlag: Send Telemetry = True
+2025-12-12 20:39:55 | INFO     | Created Custom Covers Dir settings in the db.
+2025-12-12 20:39:55 | INFO     | root_path: 
+2025-12-12 20:39:55 | SUCCESS  | Running Codex v1.8.22
+2025-12-12 20:39:55 | SUCCESS  | BroadcastListener started.
+2025-12-12 20:39:57 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:39:58 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:39:59 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:40:00 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:40:00 | INFO     | LibrarianDaemon started all threads.
+2025-12-12 20:40:00 | SUCCESS  | LibrarianDaemon ready for tasks.
+2025-12-12 20:40:00 | INFO     | Started watching library /Users/bharath/py_selenium/python/config/custom-covers with poll
+2025-12-12 20:40:00 | INFO     | Library /Users/bharath/py_selenium/python/config/custom-covers waiting for manual poll.
+2025-12-12 20:40:00 | INFO     | Looking for search entries to update since the fracturing of the multiverse...
+2025-12-12 20:40:00 | INFO     | Looking for missing search entries to create...
+2025-12-12 20:40:00 | SUCCESS  | Search index found to be already synced in a moment.
+2025-12-12 20:42:58 | INFO     | Asking hypercorn to shut down gracefully. Could take 10 seconds...
+2025-12-12 20:42:58 | INFO     | LibrarianDaemon joined all threads.
+2025-12-12 20:42:58 | SUCCESS  | LibrarianDaemon finished.
+2025-12-12 20:42:58 | INFO     | BroadcastListener shutdown
+2025-12-12 20:42:59 | SUCCESS  | Goodbye.
+2025-12-12 20:43:11 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:43:11 | INFO     | Starting Codex v1.8.22
+2025-12-12 20:43:11 | INFO     | Ensuring database is correct and up to date...
+2025-12-12 20:43:11 | INFO     | Database up to date.
+2025-12-12 20:43:11 | SUCCESS  | Database ready.
+2025-12-12 20:43:11 | INFO     | root_path: 
+2025-12-12 20:43:11 | SUCCESS  | Running Codex v1.8.22
+2025-12-12 20:43:11 | SUCCESS  | BroadcastListener started.
+2025-12-12 20:43:13 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:43:14 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:43:15 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:43:16 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:43:16 | INFO     | LibrarianDaemon started all threads.
+2025-12-12 20:43:16 | SUCCESS  | LibrarianDaemon ready for tasks.
+2025-12-12 20:43:16 | INFO     | Started watching library /Users/bharath/py_selenium/python/config/custom-covers with poll
+2025-12-12 20:43:16 | INFO     | Library /Users/bharath/py_selenium/python/config/custom-covers waiting for manual poll.
+2025-12-12 20:43:16 | INFO     | Looking for search entries to update since the fracturing of the multiverse...
+2025-12-12 20:43:16 | INFO     | Looking for missing search entries to create...
+2025-12-12 20:43:16 | SUCCESS  | Search index found to be already synced in a moment.
+2025-12-12 20:45:32 | INFO     | Asking hypercorn to shut down gracefully. Could take 10 seconds...
+2025-12-12 20:45:32 | INFO     | LibrarianDaemon joined all threads.
+2025-12-12 20:45:32 | INFO     | BroadcastListener shutdown
+2025-12-12 20:45:32 | SUCCESS  | LibrarianDaemon finished.
+2025-12-12 20:45:33 | SUCCESS  | Goodbye.
+2025-12-12 20:46:49 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:46:49 | INFO     | Starting Codex v1.8.22
+2025-12-12 20:46:49 | INFO     | Ensuring database is correct and up to date...
+2025-12-12 20:46:49 | INFO     | Database up to date.
+2025-12-12 20:46:49 | SUCCESS  | Database ready.
+2025-12-12 20:46:50 | INFO     | root_path: 
+2025-12-12 20:46:50 | SUCCESS  | Running Codex v1.8.22
+2025-12-12 20:46:50 | SUCCESS  | BroadcastListener started.
+2025-12-12 20:46:51 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:46:52 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:46:53 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:46:54 | WARNING  | Cannot detect or read from CBR archives
+2025-12-12 20:46:54 | INFO     | LibrarianDaemon started all threads.
+2025-12-12 20:46:54 | SUCCESS  | LibrarianDaemon ready for tasks.
+2025-12-12 20:46:54 | INFO     | Started watching library /Users/bharath/py_selenium/python/config/custom-covers with poll
+2025-12-12 20:46:54 | INFO     | Library /Users/bharath/py_selenium/python/config/custom-covers waiting for manual poll.
+2025-12-12 20:46:54 | INFO     | Looking for search entries to update since the fracturing of the multiverse...
+2025-12-12 20:46:54 | INFO     | Looking for missing search entries to create...
+2025-12-12 20:46:54 | SUCCESS  | Search index found to be already synced in a moment.

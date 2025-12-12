@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.8.2 on darwin)" generated="2024-03-01T13:39:40.897796" rpa="false" schemaversion="5">
+<suite id="s1" name="00 B2BBasketDisplayServices Storefront" source="/Users/bharath/py_selenium/python/.venv/automated-testing/tests/02_B2B/00_B2BBasket/00_B2BBasketDisplayServices_Storefront.robot">
+<test id="s1-t1" name="Add Products to Basket" line="15">
+<kw name="Members Setup" type="SETUP">
+<msg time="2024-03-01T13:39:40.936842" level="FAIL">No keyword with name 'Members Setup' found.</msg>
+<status status="FAIL" start="2024-03-01T13:39:40.936633" elapsed="0.000356">No keyword with name 'Members Setup' found.</status>
+</kw>
+<kw name="Members Teardown" type="TEARDOWN">
+<msg time="2024-03-01T13:39:40.938337" level="FAIL">No keyword with name 'Members Teardown' found.</msg>
+<status status="FAIL" start="2024-03-01T13:39:40.938205" elapsed="0.000241">No keyword with name 'Members Teardown' found.</status>
+</kw>
+<tag>Members</tag>
+<tag>Storefront</tag>
+<status status="FAIL" start="2024-03-01T13:39:40.934694" elapsed="0.003865">Setup failed:
+No keyword with name 'Members Setup' found.
+
+Also teardown failed:
+No keyword with name 'Members Teardown' found.</status>
+</test>
+<status status="FAIL" start="2024-03-01T13:39:40.900602" elapsed="0.038754"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="1" skip="0">Members</stat>
+<stat pass="0" fail="1" skip="0">Storefront</stat>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="00 B2BBasketDisplayServices Storefront">00 B2BBasketDisplayServices Storefront</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2024-03-01T13:39:40.932458" level="ERROR">Error in file '/Users/bharath/py_selenium/python/.venv/automated-testing/tests/02_B2B/00_B2BBasket/00_B2BBasketDisplayServices_Storefront.robot' on line 10: Resource file '/Users/bharath/py_selenium/python/tests/settings.robot' does not exist.</msg>
+</errors>
+</robot>
