@@ -23,6 +23,30 @@ jobs:
       - name: Export JAVA_HOME
         run: echo "JAVA_HOME=${{ steps.setup-java.outputs.path }}" >> $GITHUB_ENV
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Appium server
+        run: |
+          npm install -g appium@next
+          appium driver install uiautomator2 --force
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install appium-python-client selenium pytest
+          fi
+
       - name: Install required packages
         run: |
           sudo apt-get update
@@ -70,5 +94,14 @@ jobs:
           target: google_apis
           emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect
           script: |
-            ./gradlew -Pci=true assembleDebug assembleAndroidTest --no-daemon
-            ./gradlew connectedAndroidTest --no-daemon --stacktrace
+            adb wait-for-device
+            boot_status=""
+            until [ "$boot_status" = "1" ]; do
+              boot_status="$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')"
+              sleep 2
+            done
+            echo "Emulator reported boot_completed"
+            nohup appium --address 127.0.0.1 --port 4723 --log-level info > appium.log 2>&1 &
+            APPIUM_PID=$!
+            trap "kill $APPIUM_PID" EXIT
+            python -m pytest -q test.py
