@@ -33,7 +33,7 @@ jobs:
       - name: Install Appium server
         run: |
           npm install -g appium@next
-          appium driver install uiautomator2 --force
+          appium driver install uiautomator2
 
       - name: Set up Python
         uses: actions/setup-python@v5
