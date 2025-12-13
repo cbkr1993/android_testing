@@ -62,9 +62,11 @@ jobs:
         run: |
           if command -v apt-get >/dev/null 2>&1; then
             sudo apt-get update
-            sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients unzip wget
+            sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients unzip wget \
+              libx11-6 libxcomposite1 libxcursor1 libxi6 libxtst6 libxrandr2 libxrender1 libpulse0 libasound2 libglu1-mesa
           elif command -v yum >/dev/null 2>&1; then
-            sudo yum install -y qemu-kvm qemu-kvm-tools libvirt unzip wget || true
+            sudo yum install -y qemu-kvm qemu-kvm-tools libvirt unzip wget \
+              mesa-libGL libX11 libXcomposite libXcursor libXi libXtst libXrandr libXrender alsa-lib || true
           fi
 
       - name: Install Android command-line tools
