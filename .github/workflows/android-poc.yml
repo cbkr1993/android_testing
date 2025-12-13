@@ -33,7 +33,11 @@ jobs:
       - name: Install Appium server
         run: |
           npm install -g appium@next
-          appium driver install uiautomator2
+          if appium driver list --installed | grep -q uiautomator2; then
+            appium driver update uiautomator2 || true
+          else
+            appium driver install uiautomator2
+          fi
 
       - name: Ensure Python 3 + pip
         run: |
@@ -60,8 +64,12 @@ jobs:
 
       - name: Install required packages
         run: |
-          sudo apt-get update
-          sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients unzip wget
+          if command -v apt-get >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients unzip wget
+          elif command -v yum >/dev/null 2>&1; then
+            sudo yum install -y qemu-kvm qemu-kvm-tools libvirt unzip wget || true
+          fi
 
       - name: Install Android command-line tools
         env:
@@ -70,11 +78,14 @@ jobs:
           mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
           cd $ANDROID_SDK_ROOT
 
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline.zip
-          unzip -q cmdline.zip -d cmdline-tools-temp
-
-          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
-          mv cmdline-tools-temp/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
+          if [ ! -x "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" ]; then
+            wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline.zip
+            unzip -q cmdline.zip -d cmdline-tools-temp
+            mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
+            mv cmdline-tools-temp/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
+          else
+            echo "Reusing existing cmdline-tools"
+          fi
 
           SDKMANAGER="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
           export PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH"
@@ -100,8 +111,12 @@ jobs:
           ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
         run: |
           AVDMANAGER="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/avdmanager"
-          echo "no" | "$AVDMANAGER" create avd \
-            -n github-ci -k "system-images;android-30;google_apis;x86_64" --device "pixel"
+          if "$AVDMANAGER" list avd | grep -q "Name: github-ci"; then
+            echo "AVD github-ci already exists"
+          else
+            echo "no" | "$AVDMANAGER" create avd \
+              -n github-ci -k "system-images;android-30;google_apis;x86_64" --device "pixel"
+          fi
 
       - name: Start emulator
         env:
@@ -134,7 +149,7 @@ jobs:
           nohup appium --address 127.0.0.1 --port 4723 --log-level info > appium.log 2>&1 &
           APPIUM_PID=$!
           trap "kill $APPIUM_PID" EXIT
-          python -m pytest -q test.py
+          python3 -m pytest -q test.py
 
       - name: Stop emulator
         if: always()
