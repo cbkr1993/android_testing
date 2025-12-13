@@ -33,11 +33,7 @@ jobs:
       - name: Install Appium server
         run: |
           npm install -g appium@next
-          if appium driver list --installed | grep -q uiautomator2; then
-            appium driver update uiautomator2 || true
-          else
-            appium driver install uiautomator2
-          fi
+          appium driver update uiautomator2 || appium driver install uiautomator2 || true
 
       - name: Ensure Python 3 + pip
         run: |
