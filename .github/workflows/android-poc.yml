@@ -100,13 +100,22 @@ jobs:
         run: |
           nohup $ANDROID_SDK_ROOT/emulator/emulator -avd github-ci -no-window -no-boot-anim -gpu swiftshader_indirect -noaudio > emulator.log 2>&1 &
           echo "EMULATOR_PID=$!" >> $GITHUB_ENV
-          adb wait-for-device
+          timeout 300 adb wait-for-device
           DEVICE_UDID="$(adb devices | awk 'NR>1 && $2=="device" {print $1; exit}')"
           echo "APPIUM_UDID=$DEVICE_UDID" >> $GITHUB_ENV
           echo "ANDROID_SERIAL=$DEVICE_UDID" >> $GITHUB_ENV
           boot_status=""
+          start_ts=$(date +%s)
+          BOOT_TIMEOUT=600
           until [ "$boot_status" = "1" ]; do
-            boot_status="$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')"
+            boot_status="$(adb -s "$DEVICE_UDID" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')"
+            now=$(date +%s)
+            if [ $((now - start_ts)) -ge $BOOT_TIMEOUT ]; then
+              echo "Emulator did not finish booting within ${BOOT_TIMEOUT}s"
+              adb -s "$DEVICE_UDID" shell getprop sys.boot_completed || true
+              tail -n 200 emulator.log || true
+              exit 1
+            fi
             sleep 2
           done
           echo "Emulator reported boot_completed"
