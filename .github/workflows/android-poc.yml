@@ -35,18 +35,27 @@ jobs:
           npm install -g appium@next
           appium driver install uiautomator2
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
+      - name: Ensure Python 3 + pip
+        run: |
+          if command -v python3 >/dev/null 2>&1; then
+            echo "python3 already installed"
+          else
+            if command -v yum >/dev/null 2>&1; then
+              sudo yum install -y python3
+            elif command -v apt-get >/dev/null 2>&1; then
+              sudo apt-get update
+              sudo apt-get install -y python3 python3-pip
+            fi
+          fi
+          python3 -m ensurepip --upgrade || true
 
       - name: Install Python dependencies
         run: |
-          python -m pip install --upgrade pip
+          python3 -m pip install --upgrade pip
           if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
+            python3 -m pip install -r requirements.txt
           else
-            pip install appium-python-client selenium pytest python-dotenv
+            python3 -m pip install appium-python-client selenium pytest python-dotenv
           fi
 
       - name: Install required packages
