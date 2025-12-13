@@ -91,7 +91,7 @@ jobs:
           ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
         run: |
           echo "no" | $ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools/bin/avdmanager create avd \
-            -n github-ci -k "system-images;android-30;google_apis;x86_64" --device "pixel" --force
+            -n github-ci -k "system-images;android-30;google_apis;x86_64" --device "pixel"
 
       - name: Start emulator
         env:
@@ -100,6 +100,9 @@ jobs:
           nohup $ANDROID_SDK_ROOT/emulator/emulator -avd github-ci -no-window -no-boot-anim -gpu swiftshader_indirect -noaudio > emulator.log 2>&1 &
           echo "EMULATOR_PID=$!" >> $GITHUB_ENV
           adb wait-for-device
+          DEVICE_UDID="$(adb devices | awk 'NR>1 && $2=="device" {print $1; exit}')"
+          echo "APPIUM_UDID=$DEVICE_UDID" >> $GITHUB_ENV
+          echo "ANDROID_SERIAL=$DEVICE_UDID" >> $GITHUB_ENV
           boot_status=""
           until [ "$boot_status" = "1" ]; do
             boot_status="$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')"
@@ -118,7 +121,10 @@ jobs:
         if: always()
         run: |
           if command -v adb >/dev/null 2>&1; then
-            adb -s emulator-5554 emu kill || true
+            if [ -n "${APPIUM_UDID:-}" ]; then
+              adb -s "$APPIUM_UDID" emu kill || true
+            fi
+            adb emu kill || true
           fi
           if [ -n "${EMULATOR_PID:-}" ]; then
             kill "$EMULATOR_PID" || true

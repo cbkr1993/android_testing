@@ -1,5 +1,6 @@
 import os
 import subprocess
+from typing import List, Optional
 
 from appium.options.android import UiAutomator2Options
 from appium import webdriver
@@ -12,7 +13,7 @@ except Exception:
     pass
 
 
-def _detect_android_udid() -> str | None:
+def _detect_android_udid() -> Optional[str]:
     for key in ("APPIUM_UDID", "ANDROID_UDID", "ANDROID_SERIAL"):
         value = os.getenv(key)
         if value:
@@ -23,7 +24,7 @@ def _detect_android_udid() -> str | None:
     except Exception:
         return None
 
-    devices: list[str] = []
+    devices: List[str] = []
     for line in output.splitlines():
         line = line.strip()
         if not line or line.startswith("List of devices"):
